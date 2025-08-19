@@ -209,7 +209,7 @@
     },
     "securitySchemes": {
       "basicAuth": {
-         "type": "http",
+         "type": "https",
         "scheme": "basic"
       }
     }
