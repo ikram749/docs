@@ -208,9 +208,9 @@
       }
     },
     "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
+      "basicAuth": {
+         "type": "http",
+        "scheme": "basic"
       }
     }
   }
