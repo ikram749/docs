@@ -51,20 +51,25 @@
         "tab": "API reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "API Reference",
+              "pages": [
+                  { "name": "Introduction", "path": "/api-reference/introduction" },
+                  { "name": "OpenAPI Explorer", "path": "/api-reference/openapi" },
+                  { "name": "FPX Bank List", "path": "/reference/fpx_bank_list" },
+                  { "name": "Payment", "path": "/reference/payment" },
+                  { "name": "Transactions", "path": "/reference/transactions" },
+                  { "name": "Transaction Status", "path": "/reference/transactions-transaction_id" },
+                  { "name": "Refund", "path": "/reference/refund" }
+                ]
+            },
+            {
+            "group": "Guides",
             "pages": [
-              "api-reference/introduction"
+              { "name": "Hash Generation", "path": "/guides/hash-generation" },
+              { "name": "Payment Channels", "path": "/guides/payment-channels" },
+              { "name": "Payment Codes", "path": "/guides/payment-codes" }
             ]
           },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
         ]
       }
     ],
