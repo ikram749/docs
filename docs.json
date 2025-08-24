@@ -8,78 +8,35 @@
     "dark": "#15803D"
   },
   "favicon": "/favicon.svg",
+   {
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Integration Guides",
-            "pages": [
-              {
-                "name": "Hash Generation",
-                "path": "/guides/hash-generation"
-              },
-              {
-                "name": "Payment Channels",
-                "path": "/guides/payment-channels"
-              },
-              {
-                "name": "Payment Codes",
-                "path": "/guides/payment-codes"
-              }
-            ]
-          }
+        "tab": "API reference",
+        "icon": "square-terminal",
+        "pages": [
+          "api-reference/get",
+          "api-reference/post",
+          "api-reference/delete"
         ]
       },
       {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API Reference",
-            "pages": [
-              {
-                "name": "Introduction",
-                "path": "/api-reference/introduction"
-              },
-              {
-                "name": "OpenAPI Explorer",
-                "path": "/api-reference/openapi"
-              },
-              {
-                "name": "FPX Bank List",
-                "path": "/reference/fpx_bank_list"
-              },
-              {
-                "name": "Payment",
-                "path": "/reference/payment"
-              },
-              {
-                "name": "Transactions",
-                "path": "/reference/transactions"
-              },
-              {
-                "name": "Transaction Status",
-                "path": "/reference/transactions-transaction_id"
-              },
-              {
-                "name": "Refund",
-                "path": "/reference/refund"
-              }
-            ]
-          }
+        "tab": "SDKs",
+        "icon": "code",
+        "pages": [
+          "sdk/fetch",
+          "sdk/create",
+          "sdk/delete"
         ]
+      },
+      {
+        "tab": "Blog",
+        "icon": "newspaper",
+        "href": "https://external-link.com/blog"
       }
     ]
-  },
+  }
+},
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
