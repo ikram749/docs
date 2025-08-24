@@ -1,80 +1,129 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: Quickstart
 ---
 
-## Get started in three steps
+# ⚡ Quickstart Guide
 
-Get your documentation site running locally and make your first customization.
+This guide will walk you through the **end-to-end SayabeliPay integration**:
 
-### Step 1: Set up your local environment
+1. Fetch FPX banks (if using `ONLINE_BANKING`)  
+2. Create a payment  
+3. Redirect the customer to complete payment  
+4. Check transaction status  
+5. (Optional) Refund a transaction  
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+---
 
-### Step 2: Deploy your changes
+## 1️⃣ Authentication
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+All requests use **Basic Auth** with your **client_id** and **client_secret**:
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+```http
+Authorization: Basic <Base64(client_id:client_secret)>
+Content-Type: application/json
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+Example in curl:
+curl -X POST https://api.sayabelipay.com/api/sandbox/fpx_bank_list \
+  -H "Authorization: Basic <base64-clientid:clientsecret>" \
+  -H "Content-Type: application/json"
 
-### Step 3: Go live
+  2️⃣ Fetch Bank List (FPX)
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+If your user selects ONLINE_BANKING, fetch the list of available banks:
 
-## Next steps
+curl -X POST https://api.sayabelipay.com/api/sandbox/fpx_bank_list \
+  -H "Authorization: Basic <base64-clientid:clientsecret>" \
+  -H "Content-Type: application/json"
 
-Now that you have your docs running, explore these key features:
+  Sample response:
 
-<CardGroup cols={2}>
+{
+  "banks": {
+    "MB2U0227": { "name": "Maybank", "status": "online" },
+    "CIMB0440": { "name": "CIMB Bank", "status": "offline" }
+  }
+}
 
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
+Use the bank code (MB2U0227) as the payment_code.
 
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
 
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
+3️⃣ Create a Payment
 
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
+Build a hash from your request fields using SHA-256.
+👉 See Hash Generation Guide
+.
 
-</CardGroup>
+Request example:
 
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>
+curl -X POST https://api.sayabelipay.com/api/sandbox/payment \
+  -H "Authorization: Basic <base64-clientid:clientsecret>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "order_no": "INV12345",
+    "order_detail": "Shoes",
+    "amount": "100.00",
+    "quantity": 1,
+    "customer_name": "John Doe",
+    "customer_email": "john@example.com",
+    "customer_phone": "60123456789",
+    "channel": "ONLINE_BANKING",
+    "payment_code": "MB2U0227",
+    "hash": "<sha256_hash_here>"
+  }'
+
+
+Successful response:
+
+{
+  "transaction_id": "TX123456789",
+  "order_no": "INV12345",
+  "product_description": "Shoes",
+  "channel": "ONLINE_BANKING",
+  "currency": "MYR",
+  "transaction_amount": "100.00",
+  "transaction_date": "2025-08-24 14:22:00",
+  "status": "Pending",
+  "merchant_redirect_url": "https://sayabelipay.com/redirect/checkout/abc123"
+}
+
+
+Redirect your customer to merchant_redirect_url.
+
+4️⃣ Check Transaction Status
+
+After the user completes payment, query the transaction status:
+
+curl -X GET https://api.sayabelipay.com/api/sandbox/transactions/TX123456789 \
+  -H "Authorization: Basic <base64-clientid:clientsecret>" \
+  -H "Content-Type: application/json"
+
+
+Sample response:
+
+{
+  "transaction_id": "TX123456789",
+  "order_no": "INV12345",
+  "status": "Success",
+  "transaction_amount": "100.00",
+  "transaction_date": "2025-08-24 14:25:00"
+}
+
+5️⃣ Refund (Optional)
+
+You can refund a transaction using its transaction_id.
+
+curl -X GET "https://api.sayabelipay.com/api/sandbox/refund?transaction_id=TX123456789" \
+  -H "Authorization: Basic <base64-clientid:clientsecret>" \
+  -H "Content-Type: application/json"
+
+
+Sample response:
+
+{
+  "transaction_id": "TX123456789",
+  "order_no": "INV12345",
+  "bank_name": "Maybank",
+  "status": "refunded",
+  "processed_at": "2025-08-24 15:00:00",
+  "message": "Refund completed successfully"
+}
