@@ -1,97 +1,78 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: Overview
 ---
 
-## Setting up
+# 👋 Welcome to SayabeliPay API
 
-Get your documentation site up and running in minutes.
+SayabeliPay is a modern payment gateway for Malaysia that enables merchants to accept payments via **FPX Online Banking**, **Credit/Debit Cards**, and **Local E-Wallets** such as Boost, TNG, GrabPay, MAE, ShopeePay, Alipay, and WeChat Pay.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+Our API provides everything you need to:
 
-## Make it yours
+- ✅ Fetch available FPX banks and their status  
+- ✅ Create secure payment transactions  
+- ✅ Redirect customers to complete checkout  
+- ✅ Query transaction history and statuses  
+- ✅ Process refunds easily  
+- ✅ Verify requests using SHA-256 hash signatures  
 
-Design a docs site that looks great and empowers your users.
+---
 
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
+## 🌍 Environments
 
-## Create beautiful pages
+- **Sandbox (Testing)**  
+https://api.sayabelipay.com/api/sandbox
 
-Everything you need to create world-class documentation.
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+- **Production (Live)**  
 
-## Need inspiration?
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+https://api.sayabelipay.com/api/live
+
+
+---
+
+## 🔐 Authentication
+
+All API requests use **Basic Auth** with your credentials:  
+
+- **Username** = `client_id`  
+- **Password** = `client_secret`  
+
+Example header:
+
+```http
+Authorization: Basic <Base64(client_id:client_secret)>
+Content-Type: application/json
+
+
+👉 Learn more in the API Reference Introduction
+.
+
+🚀 Quickstart
+
+New to SayabeliPay? Follow the Quickstart guide
+ to:
+
+Fetch available banks
+
+Create a payment with a SHA-256 hash
+
+Redirect your customer to checkout
+
+Confirm transaction status
+
+Process a refund
+
+📚 Resources
+
+API Reference
+ → all endpoints
+
+Hash Generation Guide
+ → how to sign requests
+
+Payment Channels
+ → supported channels
+
+Payment Codes
+ → wallet + bank codes
