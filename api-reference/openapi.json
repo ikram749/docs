@@ -1,16 +1,21 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "title": "SayabeliPay API",
+    "description": "SayabeliPay payment gateway API. Supports FPX bank listing, payment initiation, transaction queries, refunds, and secure request signing via hash generation.",
+    "version": "1.0.0",
     "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
+      "name": "Proprietary"
+    }
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "https://api.sayabelipay.com/api/sandbox",
+      "description": "Sandbox Environment"
+    },
+    {
+      "url": "https://api.sayabelipay.com/api/live",
+      "description": "Production Environment"
     }
   ],
   "security": [
@@ -19,198 +24,229 @@
     }
   ],
   "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
+    "/fpx_bank_list": {
+      "post": {
+        "description": "Retrieve FPX bank listing with their display name and online/offline status.",
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "List of banks and status",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
+                  "type": "object",
+                  "properties": {
+                    "banks": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "description": "Bank display name" },
+                          "status": { "type": "string", "description": "Availability (online/offline)" }
+                        }
+                      }
+                    }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "webhooks": {
-    "/plant/webhook": {
+    "/payment": {
       "post": {
-        "description": "Information about a new plant added to the store",
+        "description": "Initiate a new payment transaction. Requires a SHA-256 hash for request integrity (see components.securitySchemes.hashSignature).",
         "requestBody": {
-          "description": "Plant added to the store",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/PaymentRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully"
+            "description": "Payment successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentResponse"
+                }
+              }
+            }
+          },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/transactions": {
+      "get": {
+        "description": "Retrieve a paginated list of transactions with optional date filters.",
+        "parameters": [
+          { "name": "date_start", "in": "query", "schema": { "type": "string", "format": "date" } },
+          { "name": "date_end", "in": "query", "schema": { "type": "string", "format": "date" } },
+          { "name": "per_page", "in": "query", "schema": { "type": "integer" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction list retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Transaction" }
+                }
+              }
+            }
+          },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/transactions/{transaction_id}": {
+      "get": {
+        "description": "Retrieve details of a specific transaction.",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Transaction" }
+              }
+            }
+          },
+          "404": { "description": "Transaction not found" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/refund": {
+      "get": {
+        "description": "Request a refund for a transaction by transaction_id.",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Refund details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Refund" }
+              }
+            }
+          },
+          "404": { "description": "Transaction not found" },
+          "500": { "description": "Internal server error" }
         }
       }
     }
   },
   "components": {
     "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
+      "PaymentRequest": {
         "type": "object",
+        "required": [
+          "order_no",
+          "order_detail",
+          "amount",
+          "quantity",
+          "customer_name",
+          "customer_email",
+          "customer_phone",
+          "channel",
+          "hash"
+        ],
         "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
+          "order_no": { "type": "string", "description": "Unique order number from merchant" },
+          "order_detail": { "type": "string", "description": "Product/service description (max 30 chars)" },
+          "amount": { "type": "string", "example": "1000.00", "description": "Transaction amount" },
+          "quantity": { "type": "integer", "description": "Quantity of items" },
+          "customer_name": { "type": "string" },
+          "customer_email": { "type": "string", "format": "email" },
+          "customer_phone": { "type": "string" },
+          "channel": { "type": "string", "enum": ["ONLINE_BANKING", "CC", "WALLET"] },
+          "payment_code": { "type": "string", "description": "Bank/wallet code if applicable" },
+          "hash": {
+            "type": "string",
+            "description": "SHA-256 hash of concatenated string: clientSecret + customer_name + customer_email + customer_phone + order_no + amount + order_detail + paymentCode"
           }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
+      "PaymentResponse": {
         "type": "object",
         "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
+          "transaction_id": { "type": "string" },
+          "order_no": { "type": "string" },
+          "product_description": { "type": "string" },
+          "channel": { "type": "string" },
+          "currency": { "type": "string", "example": "MYR" },
+          "transaction_amount": { "type": "string" },
+          "transaction_date": { "type": "string" },
+          "name": { "type": "string" },
+          "phone_number": { "type": "string" },
+          "email_address": { "type": "string" },
+          "status": { "type": "string", "enum": ["Success", "Failed", "Aborted"] },
+          "merchant_id": { "type": "string" },
+          "merchant_redirect_url": { "type": "string" }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "transaction_id": { "type": "string" },
+          "order_no": { "type": "string" },
+          "product_description": { "type": "string" },
+          "name": { "type": "string" },
+          "phone_number": { "type": "string" },
+          "email_address": { "type": "string" },
+          "payment_use": { "type": "string" },
+          "transaction_amount": { "type": "string" },
+          "transaction_date": { "type": "string" },
+          "status": { "type": "string", "enum": ["Success", "Failed", "Aborted"] }
+        }
+      },
+      "Refund": {
+        "type": "object",
+        "properties": {
+          "transaction_id": { "type": "string" },
+          "order_no": { "type": "string" },
+          "bank_name": { "type": "string" },
+          "status": { "type": "string" },
+          "processed_at": { "type": "string" },
+          "message": { "type": "string" }
         }
       }
     },
     "securitySchemes": {
       "basicAuth": {
         "type": "http",
-        "scheme": "basic"
+        "scheme": "basic",
+        "description": "Use your client_id as username and client_secret as password."
+      },
+      "hashSignature": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "hash",
+        "description": "SHA-256 hash required for Payment API. Formula: clientSecret + customer_name + customer_email + customer_phone + order_no + amount + order_detail + (payment_code or channel)."
       }
     }
   }
