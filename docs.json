@@ -94,7 +94,7 @@
     "primary": {
       "type": "button",
       "label": "Merchant Dashboard",
-      "href": "https://dashboard.sayabelipay.com"
+      "href": "https://sayabelipay.com/login"
     }
   },
   "contextual": {
