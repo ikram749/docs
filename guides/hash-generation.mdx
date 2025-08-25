@@ -1,16 +1,12 @@
-
 ---
-title: Hash Generation
+title: "Hash Generation Guide"
 ---
 
-# 🔑 Hash Generation Guide
-
-To ensure secure and tamper-proof API requests, all **Payment API** calls require a SHA-256 hash.  
+To ensure secure and tamper-proof API requests, all **Payment API** calls require a SHA-256 hash.
 
 This hash is generated from a concatenated string in **this exact order**:
 
-clientSecret + customer_name + customer_email + customer_phone + order_no + amount + order_detail + paymentCode
-
+clientSecret \+ customer_name \+ customer_email \+ customer_phone \+ order_no \+ amount \+ order_detail \+ paymentCode
 
 > ⚠️ **Note:** If `payment_code` is not provided, fallback to `channel`.
 
@@ -18,7 +14,7 @@ clientSecret + customer_name + customer_email + customer_phone + order_no + amou
 
 ## JavaScript (Browser)
 
-```js
+````js
 const paymentCode = formData.get('payment_code') || formData.get('channel');
 
 const str = clientSecret +
@@ -36,9 +32,10 @@ const hash = Array.from(new Uint8Array(hashBuffer))
   .join('');
 
 formData.set('hash', hash);
-
+```
 
 PHP
+````php
 $stringToHash = $clientSecret
     . $data['customer_name']
     . $data['customer_email']
@@ -49,9 +46,10 @@ $stringToHash = $clientSecret
     . ($data['payment_code'] ?? $data['channel']);
 
 $data['hash'] = hash('sha256', $stringToHash);
-
+````
 
 Java
+````java
 import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;
 import java.math.BigInteger;
@@ -62,11 +60,12 @@ String str = clientSecret + customerName + customerEmail + customerPhone
 MessageDigest md = MessageDigest.getInstance("SHA-256");
 byte[] hash = md.digest(str.getBytes(StandardCharsets.UTF_8));
 String finalHash = new BigInteger(1, hash).toString(16);
-
+````
 
 
 
 C# (ASP.NET)
+````asp
 using System.Security.Cryptography;
 using System.Text;
 
@@ -77,7 +76,7 @@ string str = clientSecret + customer_name + customer_email + customer_phone
 using var sha = SHA256.Create();
 string hash = string.Concat(sha.ComputeHash(Encoding.UTF8.GetBytes(str))
                     .Select(b => b.ToString("x2")));
-
+````
 
 ---
 
@@ -92,10 +91,11 @@ title: Payment Channels
 
 SayabeliPay supports multiple payment channels. The `channel` field in your request must match one of these values:
 
-| Channel         | Description                                      |
-|-----------------|--------------------------------------------------|
+| Channel          | Description                                      |
+|------------------|--------------------------------------------------|
 | `ONLINE_BANKING` | Pay through online banking within Malaysia       |
-| `CC`            | Pay with debit or credit card                    |
-| `WALLET`        | Pay using supported local e-wallets in Malaysia  |
+| `CC`             | Pay with debit or credit card                    |
+| `WALLET`         | Pay using supported local e-wallets in Malaysia  |
 
 > ✅ If `ONLINE_BANKING` or `WALLET` is used, you must also specify a **`payment_code`** from the supported list.
+````
