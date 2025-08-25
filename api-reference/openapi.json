@@ -26,7 +26,14 @@
   "paths": {
     "/fpx_bank_list": {
       "post": {
-        "description": "Retrieve FPX bank listing with their display name and online/offline status.",
+         "description": "Retrieve FPX bank listing with their display name and online/offline status.",
+        "x-mint": {
+          "metadata": {
+            "title": "FPX Bank List",
+            "description": "Retrieve available FPX banks with their status (online/offline).",
+            "og:title": "List of FPX Banks"
+          }
+        },
         "responses": {
           "200": {
             "description": "List of banks and status",
@@ -58,7 +65,14 @@
     },
     "/payment": {
       "post": {
-        "description": "Initiate a new payment transaction. Requires a SHA-256 hash for request integrity (see components.securitySchemes.hashSignature).",
+         "description": "Initiate a new payment transaction. Requires a SHA-256 hash for request integrity.",
+        "x-mint": {
+          "metadata": {
+            "title": "Initiate Payment",
+            "description": "Create a new payment request with customer and order details.",
+            "og:title": "Start a Payment"
+          }
+        },
         "requestBody": {
           "required": true,
           "content": {
@@ -87,6 +101,13 @@
     "/transactions": {
       "get": {
         "description": "Retrieve a paginated list of transactions with optional date filters.",
+        "x-mint": {
+          "metadata": {
+            "title": "List Transactions",
+            "description": "Retrieve transactions with pagination and optional date range filters.",
+            "og:title": "Transaction History"
+          }
+        },
         "parameters": [
           { "name": "date_start", "in": "query", "schema": { "type": "string", "format": "date" } },
           { "name": "date_end", "in": "query", "schema": { "type": "string", "format": "date" } },
@@ -111,7 +132,15 @@
     },
     "/transactions/{transaction_id}": {
       "get": {
+        "summary": "Get transaction detail",
         "description": "Retrieve details of a specific transaction.",
+        "x-mint": {
+          "metadata": {
+            "title": "Transaction Details",
+            "description": "Get detailed information for a specific transaction by ID.",
+            "og:title": "View Transaction"
+          }
+        },
         "parameters": [
           {
             "name": "transaction_id",
@@ -137,6 +166,13 @@
     "/refund": {
       "get": {
         "description": "Request a refund for a transaction by transaction_id.",
+        "x-mint": {
+          "metadata": {
+            "title": "Request Refund",
+            "description": "Initiate a refund request by providing the transaction ID.",
+            "og:title": "Refund Transaction"
+          }
+        },
         "parameters": [
           {
             "name": "transaction_id",
