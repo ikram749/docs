@@ -3,128 +3,59 @@ title: "Quickstart"
 ---
 
 
-This guide will walk you through the **end-to-end SayabeliPay integration**:
+SayabeliPay is a modern payment gateway for Malaysia that enables merchants to accept payments via **FPX Online Banking**, **Credit/Debit Cards**, and **Local E-Wallets** such as Boost, TNG, GrabPay, MAE, ShopeePay, Alipay, and WeChat Pay.
 
-1. Fetch FPX banks (if using `ONLINE_BANKING`)
-2. Create a payment
-3. Redirect the customer to complete payment
-4. Check transaction status
-5. (Optional) Refund a transaction
+Our API provides everything you need to:
+
+- ✅ Fetch available FPX banks and their status
+- ✅ Create secure payment transactions
+- ✅ Redirect customers to complete checkout
+- ✅ Query transaction history and statuses
+- ✅ Process refunds easily
+- ✅ Verify requests using SHA-256 hash signatures
 
 ---
 
-## 1️⃣ Authentication
+### Environments
 
-All requests use **Basic Auth** with your **client_id** and **client_secret**:
+- **Sandbox (Testing)**\
+  https://sayabelipay.com/api/sandbox
+- **Production (Live)**
 
-````http
+  https://sayabelipay.com/api/live
+
+---
+
+### Authentication
+
+All API requests use **Basic Auth** with your credentials:
+
+- **Username** = `client_id`
+- **Password** = `client_secret`
+
+Example header:
+
+```http
 Authorization: Basic <Base64(client_id:client_secret)>
 Content-Type: application/json
-
-Example in curl:
-curl -X POST https://api.sayabelipay.com/api/sandbox/fpx_bank_list \
-  -H "Authorization: Basic <base64-clientid:clientsecret>" \
-  -H "Content-Type: application/json"
-
-  2️⃣ Fetch Bank List (FPX)
-
-If your user selects ONLINE_BANKING, fetch the list of available banks:
-
-curl -X POST https://api.sayabelipay.com/api/sandbox/fpx_bank_list \
-  -H "Authorization: Basic <base64-clientid:clientsecret>" \
-  -H "Content-Type: application/json"
-
-  Sample response:
-
-{
-  "banks": {
-    "MB2U0227": { "name": "Maybank", "status": "online" },
-    "CIMB0440": { "name": "CIMB Bank", "status": "offline" }
-  }
-}
-
-````
-Use the bank code (MB2U0227) as the payment_code.
-
-
-3️⃣ Create a Payment
-
-Build a hash from your request fields using SHA-256.
-👉 See Hash Generation Guide
-.
-
-Request example:
-
-curl -X POST https://api.sayabelipay.com/api/sandbox/payment \
-  -H "Authorization: Basic <base64-clientid:clientsecret>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "order_no": "INV12345",
-    "order_detail": "Shoes",
-    "amount": "100.00",
-    "quantity": 1,
-    "customer_name": "John Doe",
-    "customer_email": "john@example.com",
-    "customer_phone": "60123456789",
-    "channel": "ONLINE_BANKING",
-    "payment_code": "MB2U0227",
-    "hash": "<sha256_hash_here>"
-  }'
-
-
-Successful response:
-
-{
-  "transaction_id": "TX123456789",
-  "order_no": "INV12345",
-  "product_description": "Shoes",
-  "channel": "ONLINE_BANKING",
-  "currency": "MYR",
-  "transaction_amount": "100.00",
-  "transaction_date": "2025-08-24 14:22:00",
-  "status": "Pending",
-  "merchant_redirect_url": "https://sayabelipay.com/redirect/checkout/abc123"
-}
-
-
-Redirect your customer to merchant_redirect_url.
-
-4️⃣ Check Transaction Status
-
-After the user completes payment, query the transaction status:
-
-curl -X GET https://api.sayabelipay.com/api/sandbox/transactions/TX123456789 \
-  -H "Authorization: Basic <base64-clientid:clientsecret>" \
-  -H "Content-Type: application/json"
-
-
-Sample response:
-
-{
-  "transaction_id": "TX123456789",
-  "order_no": "INV12345",
-  "status": "Success",
-  "transaction_amount": "100.00",
-  "transaction_date": "2025-08-24 14:25:00"
-}
-
-5️⃣ Refund (Optional)
-
-You can refund a transaction using its transaction_id.
-
-curl -X GET "https://api.sayabelipay.com/api/sandbox/refund?transaction_id=TX123456789" \
-  -H "Authorization: Basic <base64-clientid:clientsecret>" \
-  -H "Content-Type: application/json"
-
-
-Sample response:
-
-{
-  "transaction_id": "TX123456789",
-  "order_no": "INV12345",
-  "bank_name": "Maybank",
-  "status": "refunded",
-  "processed_at": "2025-08-24 15:00:00",
-  "message": "Refund completed successfully"
-}
 ```
+
+Learn more in the API Reference  
+
+### Quickstart
+
+New to SayabeliPay? Follow the Quickstart guide to:
+
+- Fetch available banks
+- Create a payment 
+- List of transaction
+- Transaction details
+- Process a refund
+
+### Guides
+
+Hash Generation Guide → how to sign requests
+
+Payment Channels → supported channels
+
+Payment Codes → wallet \+ bank codes

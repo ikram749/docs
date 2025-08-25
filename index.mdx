@@ -1,42 +1,37 @@
 ---
-title: Overview
+title: "Overview"
 ---
 
-# 👋 Welcome to SayabeliPay API
 
 SayabeliPay is a modern payment gateway for Malaysia that enables merchants to accept payments via **FPX Online Banking**, **Credit/Debit Cards**, and **Local E-Wallets** such as Boost, TNG, GrabPay, MAE, ShopeePay, Alipay, and WeChat Pay.
 
 Our API provides everything you need to:
 
-- ✅ Fetch available FPX banks and their status  
-- ✅ Create secure payment transactions  
-- ✅ Redirect customers to complete checkout  
-- ✅ Query transaction history and statuses  
-- ✅ Process refunds easily  
-- ✅ Verify requests using SHA-256 hash signatures  
+- ✅ Fetch available FPX banks and their status
+- ✅ Create secure payment transactions
+- ✅ Redirect customers to complete checkout
+- ✅ Query transaction history and statuses
+- ✅ Process refunds easily
+- ✅ Verify requests using SHA-256 hash signatures
 
 ---
 
-## 🌍 Environments
+### Environments
 
-- **Sandbox (Testing)**  
-https://api.sayabelipay.com/api/sandbox
+- **Sandbox (Testing)**\
+  https://sayabelipay.com/api/sandbox
+- **Production (Live)**
 
-
-- **Production (Live)**  
-
-
-https://api.sayabelipay.com/api/live
-
+  https://sayabelipay.com/api/live
 
 ---
 
-## 🔐 Authentication
+### Authentication
 
-All API requests use **Basic Auth** with your credentials:  
+All API requests use **Basic Auth** with your credentials:
 
-- **Username** = `client_id`  
-- **Password** = `client_secret`  
+- **Username** = `client_id`
+- **Password** = `client_secret`
 
 Example header:
 
@@ -45,34 +40,22 @@ Authorization: Basic <Base64(client_id:client_secret)>
 Content-Type: application/json
 ```
 
-👉 Learn more in the API Reference Introduction
-.
+Learn more in the API Reference  
 
-🚀 Quickstart
+### Quickstart
 
-New to SayabeliPay? Follow the Quickstart guide
- to:
+New to SayabeliPay? Follow the Quickstart guide to:
 
-Fetch available banks
+- Fetch available banks
+- Create a payment 
+- List of transaction
+- Transaction details
+- Process a refund
 
-Create a payment with a SHA-256 hash
+### Guides
 
-Redirect your customer to checkout
+Hash Generation Guide → how to sign requests
 
-Confirm transaction status
+Payment Channels → supported channels
 
-Process a refund
-
-📚 Resources
-
-API Reference
- → all endpoints
-
-Hash Generation Guide
- → how to sign requests
-
-Payment Channels
- → supported channels
-
-Payment Codes
- → wallet + bank codes
+Payment Codes → wallet \+ bank codes
