@@ -26,6 +26,7 @@
   "paths": {
     "/fpx_bank_list": {
       "post": {
+        "summary": "Retrieve FPX bank",
          "description": "Retrieve FPX bank listing with their display name and online/offline status.",
         "x-mint": {
           "metadata": {
@@ -65,6 +66,7 @@
     },
     "/payment": {
       "post": {
+         "summary": "Initiate payment",
          "description": "Initiate a new payment transaction. Requires a SHA-256 hash for request integrity.",
         "x-mint": {
           "metadata": {
@@ -100,6 +102,7 @@
     },
     "/transactions": {
       "get": {
+        "summary": "List Transactions",
         "description": "Retrieve a paginated list of transactions with optional date filters.",
         "x-mint": {
           "metadata": {
@@ -132,7 +135,7 @@
     },
     "/transactions/{transaction_id}": {
       "get": {
-        "summary": "Get transaction detail",
+        "summary": "Transaction Details",
         "description": "Retrieve details of a specific transaction.",
         "x-mint": {
           "metadata": {
@@ -165,6 +168,7 @@
     },
     "/refund": {
       "get": {
+        "summary": "Request Refund",
         "description": "Request a refund for a transaction by transaction_id.",
         "x-mint": {
           "metadata": {
