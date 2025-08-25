@@ -1,16 +1,15 @@
 ---
-title: Quickstart
+title: "Quickstart"
 ---
 
-# ⚡ Quickstart Guide
 
 This guide will walk you through the **end-to-end SayabeliPay integration**:
 
-1. Fetch FPX banks (if using `ONLINE_BANKING`)  
-2. Create a payment  
-3. Redirect the customer to complete payment  
-4. Check transaction status  
-5. (Optional) Refund a transaction  
+1. Fetch FPX banks (if using `ONLINE_BANKING`)
+2. Create a payment
+3. Redirect the customer to complete payment
+4. Check transaction status
+5. (Optional) Refund a transaction
 
 ---
 
@@ -18,7 +17,7 @@ This guide will walk you through the **end-to-end SayabeliPay integration**:
 
 All requests use **Basic Auth** with your **client_id** and **client_secret**:
 
-```http
+````http
 Authorization: Basic <Base64(client_id:client_secret)>
 Content-Type: application/json
 
@@ -44,6 +43,7 @@ curl -X POST https://api.sayabelipay.com/api/sandbox/fpx_bank_list \
   }
 }
 
+````
 Use the bank code (MB2U0227) as the payment_code.
 
 
@@ -127,3 +127,4 @@ Sample response:
   "processed_at": "2025-08-24 15:00:00",
   "message": "Refund completed successfully"
 }
+```
