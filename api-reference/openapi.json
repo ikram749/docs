@@ -25,7 +25,7 @@
   ],
   "paths": {
     "/fpx_bank_list": {
-      "post": {
+      "get": {
         "summary": "Retrieve FPX bank",
          "description": "Retrieve FPX bank listing with their display name and online/offline status.",
         "x-mint": {
