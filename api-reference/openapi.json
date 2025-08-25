@@ -167,7 +167,7 @@
       }
     },
     "/refund": {
-      "get": {
+      "post": {
         "summary": "Request Refund",
         "description": "Request a refund for a transaction by transaction_id.",
         "x-mint": {

@@ -1,53 +1,23 @@
 ---
-title: Payment Codes
+title: "Payment Codes"
 ---
 
-# 🏦 Payment Codes
+When the `channel `is set to **ONLINE_BANKING** or **WALLET**, you must provide a `payment_code`.
 
-When the `channel` is set to **ONLINE_BANKING** or **WALLET**, you must provide a `payment_code`.  
+### FPX Bank Codes
 
-## Supported Wallets
+To fetch the full list of banks and codes dynamically, call the [FPX Bank Listing API](https://sayabelipay.mintlify.app/api-reference/retrieve-fpx-bank):
 
-| Payment Code | Description          |
-|--------------|----------------------|
-| `ALIPAY`     | Alipay (CN)          |
-| `WECHAT`     | WeChat Pay (CN)      |
-| `BOOST`      | Boost Wallet         |
-| `TNG`        | TNG eWallet          |
-| `GRABPAY`    | GrabPay              |
-| `MAE`        | MAE eWallet          |
-| `SHOPEEPAY`  | ShopeePay eWallet    |
+### Supported Wallets
 
----
-
-## FPX Bank Codes
-
-To fetch the full list of banks and codes dynamically, call the **FPX Bank Listing API**:
-
-```http
-POST /fpx_bank_list
-Content-Type: application/json
-Authorization: Basic <client_id:client_secret>
-The response contains a map of bank codes with their display name and availability:
-
-
-{
-  "banks": {
-    "MB2U0227": {
-      "name": "Maybank",
-      "status": "online"
-    },
-    "CIMB0440": {
-      "name": "CIMB Bank",
-      "status": "offline"
-    }
-  }
-}
-Use the bankId (e.g. MB2U0227) as the payment_code in your payment request.
-
+| Payment Code | Description       |
+| ------------ | ----------------- |
+| `ALIPAY`     | Alipay (CN)       |
+| `WECHAT`     | WeChat Pay (CN)   |
+| `BOOST`      | Boost Wallet      |
+| `TNG`        | TNG eWallet       |
+| `GRABPAY`    | GrabPay           |
+| `MAE`        | MAE eWallet       |
+| `SHOPEEPAY`  | ShopeePay eWallet |
 
 ---
-
-✅ These are **starter docs** — they match the SayabeliPay guide you uploaded and integrate smoothly into your Mintlify project.  
-
-Would you like me to also prepare a **starter `api-reference/introduction.mdx`** that explains authentication,
