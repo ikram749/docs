@@ -10,11 +10,11 @@
   },
   "servers": [
     {
-      "url": "https://api.sayabelipay.com/api/sandbox",
+      "url": "https://sayabelipay.com/api/sandbox",
       "description": "Sandbox Environment"
     },
     {
-      "url": "https://api.sayabelipay.com/api/live",
+      "url": "https://sayabelipay.com/api/live",
       "description": "Production Environment"
     }
   ],
