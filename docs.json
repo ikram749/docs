@@ -62,9 +62,7 @@
     },
     "footer": {
         "socials": {
-            "x": "#",
-            "github": "#",
-            "linkedin": "#"
+            "x": "https://x.com"
         }
     }
 }
