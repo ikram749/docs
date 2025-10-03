@@ -129,7 +129,7 @@
         }
       }
     },
-    "/transactions/{transaction_id}": {
+    "/transaction/{transaction_id}": {
       "get": {
         "summary": "Transaction Details",
         "description": "Retrieve details of a specific transaction.",
