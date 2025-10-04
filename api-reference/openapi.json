@@ -67,7 +67,8 @@
         "x-mint": {
           "metadata": {
             "title": "Initiate Payment",
-            "description": "Create a new payment request with customer and order details.",
+            "description": "Create a new payment request with customer and order details.
+            To pay for test Purchases, use 4444 3333 2222 1111 as the card number, 123 as CVC, any date/month greater than now as expiry and any (Latin) cardholder name. Any other card number/CVC/expiry not greater or equal than the current month will all fail a test payment.",
             "og:title": "Start a Payment"
           }
         },
@@ -164,12 +165,12 @@
     },
     "/refund": {
       "post": {
-        "summary": "Request Refund",
-        "description": "Request a refund for a transaction by transaction_id.",
+        "summary": "Refund a paid purchase",
+        "description": "Request a refund for paid purchases.",
         "x-mint": {
           "metadata": {
-            "title": "Request Refund",
-            "description": "Initiate a refund request by providing the transaction ID.",
+            "title": "Refund a paid purchase",
+            "description": "Initiate a refund for paid purchases.",
             "og:title": "Refund Transaction"
           }
         },
