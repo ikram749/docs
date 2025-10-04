@@ -97,6 +97,39 @@
         }
       }
     },
+    "/transaction/{transaction_id}/cancel": {
+      "post": {
+        "summary": "Cancel a pending purchase",
+        "description": "Cancel a pending purchase.",
+        "x-mint": {
+          "metadata": {
+            "title": "Cancel a pending purchase",
+            "description": "Cancel a pending purchase.",
+            "og:title": "Cancel a pending purchase"
+          }
+        },
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Transaction" }
+              }
+            }
+          },
+          "404": { "description": "Transaction not found" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
     "/transactions": {
       "get": {
         "summary": "List Transactions",
@@ -139,39 +172,6 @@
             "title": "Transaction Details",
             "description": "Get detailed information for a specific transaction by ID.",
             "og:title": "View Transaction"
-          }
-        },
-        "parameters": [
-          {
-            "name": "transaction_id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Transaction details",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Transaction" }
-              }
-            }
-          },
-          "404": { "description": "Transaction not found" },
-          "500": { "description": "Internal server error" }
-        }
-      }
-    },
-    "/transaction/{transaction_id}/cancel": {
-      "post": {
-        "summary": "Cancel a pending purchase",
-        "description": "Cancel a pending purchase.",
-        "x-mint": {
-          "metadata": {
-            "title": "Cancel a pending purchase",
-            "description": "Cancel a pending purchase.",
-            "og:title": "Cancel a pending purchase"
           }
         },
         "parameters": [
