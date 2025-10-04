@@ -164,7 +164,7 @@
       }
     },
     "/transaction/{transaction_id}/cancel": {
-      "get": {
+      "post": {
         "summary": "Cancel a pending purchase",
         "description": "Cancel a pending purchase.",
         "x-mint": {
