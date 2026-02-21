@@ -39,15 +39,10 @@
                   "$ref": "#/components/schemas/FpxBankListResponse"
                 },
                 "example": {
+                  "status": 200,
                   "banks": {
-                    "maybank": {
-                      "name": "Maybank",
-                      "status": "online"
-                    },
-                    "cimb": {
-                      "name": "CIMB Bank",
-                      "status": "offline"
-                    }
+                    "AFBB": { "name": "Affin Bank", "status": "offline" },
+                    "RHBB": { "name": "RHB Bank", "status": "online" },
                   }
                 }
               }
@@ -76,18 +71,13 @@
         "type": "http",
         "scheme": "basic",
         "description": "Use your client_id as username and client_secret as password."
-      },
-      "hashSignature": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "hash",
-        "description": "SHA-256 hash required for Payment API. Formula: clientSecret + customer_name + customer_email + customer_phone + order_no + amount + order_detail + (payment_code or channel)."
       }
     },
     "schemas": {
       "FpxBankListResponse": {
         "type": "object",
         "properties": {
+          "status": { "type": "integer", "example": 200 },
           "banks": {
             "type": "object",
             "description": "Key-value list of banks where the key is the bank identifier.",
@@ -100,27 +90,15 @@
       "Bank": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "Bank display name",
-            "example": "Maybank"
-          },
-          "status": {
-            "type": "string",
-            "description": "Availability status of the bank",
-            "enum": ["online", "offline"],
-            "example": "online"
-          }
+          "name": { "type": "string", "description": "Bank display name", "example": "Maybank2U" },
+          "status": { "type": "string", "description": "Availability status of the bank", "enum": ["online", "offline"], "example": "online" }
         },
         "required": ["name", "status"]
       },
       "ErrorResponse": {
         "type": "object",
         "properties": {
-          "message": {
-            "type": "string",
-            "example": "Internal server error"
-          }
+          "message": { "type": "string", "example": "Internal server error" }
         },
         "required": ["message"]
       }
