@@ -22,7 +22,6 @@
         "summary": "Retrieve FPX bank",
         "description": "Retrieve FPX bank listing with their display name and online/offline status.",
         "operationId": "getFpxBankList",
-        "tags": ["FPX"],
         "x-mint": {
           "metadata": {
             "title": "FPX Bank List",
