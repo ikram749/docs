@@ -144,7 +144,7 @@
         "parameters": [
           { "name": "date_start", "in": "query", "schema": { "type": "string", "format": "date" } },
           { "name": "date_end", "in": "query", "schema": { "type": "string", "format": "date" } },
-          { "name": "per_page", "in": "query", "schema": { "type": "integer" } },
+          { "name": "per_page", "in": "query", "schema": { "type": "integer" }, "description": "Number of records per page (default: 100)" },
           { "name": "page", "in": "query", "schema": { "type": "integer" } }
         ],
         "responses": {
