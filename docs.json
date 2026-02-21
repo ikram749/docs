@@ -18,7 +18,6 @@
         },
         {
           "group": "API Reference",
-          "openapi": "/api-reference/openapi.json",
           "pages": [
             {
               "group": "Bank List",
@@ -33,6 +32,10 @@
             "/guides/payment-channels",
             "/guides/payment-codes"
           ]
+        },
+        {
+          "group": "Untitled Group",
+          "pages": []
         }
       ]
     },
