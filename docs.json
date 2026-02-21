@@ -18,12 +18,7 @@
         },
         {
           "group": "API Reference",
-          "pages": [
-            {
-              "group": "Bank List",
-              "openapi": "bank-list/banklist.json"
-            }
-          ]
+          "openapi": "bank-list/banklist.json"
         },
         {
           "group": "Guides",
