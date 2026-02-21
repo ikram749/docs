@@ -254,8 +254,8 @@
           "customer_name": { "type": "string" },
           "customer_email": { "type": "string", "format": "email" },
           "customer_phone": { "type": "string" },
-          "channel": { "type": "string", "enum": ["ONLINE_BANKING", "CC", "WALLET"] },
-          "payment_code": { "type": "string", "description": "Bank/wallet code if applicable" },
+          "channel": { "type": "string", "enum": ["ONLINE_BANKING", "CC"] },
+          "payment_code": { "type": "string", "description": "Bank code if applicable" },
           "hash": {
             "type": "string",
             "description": "SHA-256 hash of concatenated string: clientSecret + customer_name + customer_email + customer_phone + order_no + amount + order_detail + paymentCode"
