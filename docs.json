@@ -17,7 +17,8 @@
           ]
         },
         {
-          "group": "API Reference",
+          "group": "FPX Bank List",
+          "expanded": true,
           "openapi": "bank-list/banklist.json"
         },
         {
