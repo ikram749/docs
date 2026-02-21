@@ -19,7 +19,7 @@
         {
           "group": "API Reference",
           "expanded": true,
-          "openapi": "bank-list/banklist.json"
+          "openapi": "api-reference/openapi.json"
         },
         {
           "group": "Guides",

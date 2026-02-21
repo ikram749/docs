@@ -24,6 +24,7 @@
       "get": {
         "summary": "Retrieve FPX bank",
          "description": "Retrieve FPX bank listing with their display name and online/offline status.",
+         "tags": ["FPX Bank List"],
         "x-mint": {
           "metadata": {
             "title": "FPX Bank List",
@@ -33,22 +34,17 @@
         },
         "responses": {
           "200": {
-            "description": "List of banks and status",
+            "description": "List of banks and their availability status",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "banks": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "properties": {
-                          "name": { "type": "string", "description": "Bank display name" },
-                          "status": { "type": "string", "description": "Availability (online/offline)" }
-                        }
-                      }
-                    }
+                  "$ref": "#/components/schemas/FpxBankListResponse"
+                },
+                "example": {
+                  "status": 200,
+                  "banks": {
+                    "AFBB": { "name": "Affin Bank", "status": "offline" },
+                    "MYBB": { "name": "Maybank2U", "status": "online" }
                   }
                 }
               }
@@ -64,6 +60,7 @@
       "post": {
          "summary": "Initiate payment",
          "description": "Initiate a new payment transaction. Requires a SHA-256 hash for request integrity.",
+         "tags": ["Purchases"],
         "x-mint": {
           "metadata": {
             "title": "Initiate Payment",
@@ -101,6 +98,7 @@
       "post": {
         "summary": "Cancel a pending purchase",
         "description": "Cancel a pending purchase.",
+        "tags": ["Purchases"],
         "x-mint": {
           "metadata": {
             "title": "Cancel a pending purchase",
@@ -134,6 +132,7 @@
       "get": {
         "summary": "List Transactions",
         "description": "Retrieve a paginated list of transactions with optional date filters.",
+        "tags": ["Purchases"],
         "x-mint": {
           "metadata": {
             "title": "List Transactions",
@@ -166,6 +165,7 @@
       "get": {
         "summary": "Transaction Details",
         "description": "Retrieve details of a specific transaction.",
+        "tags": ["Purchases"],
         "x-mint": {
           "metadata": {
             "title": "Transaction Details",
@@ -199,6 +199,7 @@
       "post": {
         "summary": "Refund a paid purchase",
         "description": "Request a refund for paid purchases.",
+        "tags": ["Purchases"],
         "x-mint": {
           "metadata": {
             "title": "Refund a paid purchase",
