@@ -24,7 +24,7 @@
       "get": {
         "summary": "Retrieve FPX bank",
          "description": "Retrieve FPX bank listing with their display name and online/offline status.",
-         "tags": ["FPX Bank List"],
+         "tags": ["Bank List"],
         "x-mint": {
           "metadata": {
             "title": "FPX Bank List",
