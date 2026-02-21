@@ -21,7 +21,7 @@
           "pages": [
             {
               "group": "Bank List",
-              "openapi": "api-reference/banklist.json"
+              "openapi": "bank-list/banklist.json"
             }
           ]
         },
