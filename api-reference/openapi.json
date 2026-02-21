@@ -58,12 +58,12 @@
     },
     "/payment": {
       "post": {
-         "summary": "Initiate payment",
+         "summary": "Create purchases",
          "description": "Initiate a new payment transaction. Requires a SHA-256 hash for request integrity.",
          "tags": ["Purchases"],
         "x-mint": {
           "metadata": {
-            "title": "Initiate Payment",
+            "title": "Create purchases",
             "description": "Create a new payment request with customer and order details. To pay for test Purchases, use 4444 3333 2222 1111 as the card number, 123 as CVC, any date/month greater than now as expiry and any (Latin) cardholder name. Any other card number/CVC/expiry not greater or equal than the current month will all fail a test payment.",
             "og:title": "Start a Payment"
           }
