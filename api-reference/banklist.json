@@ -1,0 +1,79 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SayabeliPay API",
+    "description": "SayabeliPay payment gateway API. Supports FPX bank listing, payment initiation, transaction queries, refunds, and secure request signing via hash generation.",
+    "version": "1.0.0",
+    "license": {
+      "name": "Proprietary"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://sayabelipay.com/api",
+      "description": "API Environment"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/fpx_bank_list": {
+      "get": {
+        "summary": "Retrieve FPX bank",
+         "description": "Retrieve FPX bank listing with their display name and online/offline status.",
+        "x-mint": {
+          "metadata": {
+            "title": "FPX Bank List",
+            "description": "Retrieve available FPX banks with their status (online/offline).",
+            "og:title": "List of FPX Banks"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of banks and status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "banks": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "description": "Bank display name" },
+                          "status": { "type": "string", "description": "Availability (online/offline)" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "Use your client_id as username and client_secret as password."
+      },
+      "hashSignature": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "hash",
+        "description": "SHA-256 hash required for Payment API. Formula: clientSecret + customer_name + customer_email + customer_phone + order_no + amount + order_detail + (payment_code or channel)."
+      }
+    }
+  }
+}

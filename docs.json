@@ -9,27 +9,32 @@
     },
     "favicon": "/favicon.svg",
     "navigation": {
-        "tab": "Guides",
-        "groups": [
+      "groups": [
+        {
+          "group": "Getting started",
+          "pages": [
+            "index"
+          ]
+        },
+        {
+          "group": "API Reference",
+          "openapi": "/api-reference/openapi.json",
+          "pages": [
             {
-                "group": "Getting started",
-                "pages": [
-                    "index"
-                ]
-            },
-            {
-                "group": "API Reference",
-                "openapi": "/api-reference/openapi.json"
-            },
-            {
-                "group": "Guides",
-                "pages": [
-                    "/guides/hash-generation",
-                    "/guides/payment-channels",
-                    "/guides/payment-codes"
-                ]
+              "group": "Bank List",
+              "openapi": "api-reference/banklist.json"
             }
-        ]
+          ]
+        },
+        {
+          "group": "Guides",
+          "pages": [
+            "/guides/hash-generation",
+            "/guides/payment-channels",
+            "/guides/payment-codes"
+          ]
+        }
+      ]
     },
     "logo": {
         "light": "/logo/logo.png",
