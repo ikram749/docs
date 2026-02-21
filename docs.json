@@ -33,10 +33,6 @@
             "/guides/payment-channels",
             "/guides/payment-codes"
           ]
-        },
-        {
-          "group": "Bank List",
-          "openapi": "api-reference/banklist.json"
         }
       ]
     },
