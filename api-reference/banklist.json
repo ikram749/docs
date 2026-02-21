@@ -1,12 +1,9 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.3",
   "info": {
-    "title": "SayabeliPay API",
-    "description": "SayabeliPay payment gateway API. Supports FPX bank listing, payment initiation, transaction queries, refunds, and secure request signing via hash generation.",
-    "version": "1.0.0",
-    "license": {
-      "name": "Proprietary"
-    }
+    "title": "SayaBeliPay API",
+    "description": "API for retrieving available FPX banks and other payment-related services.",
+    "version": "1.0.0"
   },
   "servers": [
     {
@@ -23,7 +20,9 @@
     "/fpx_bank_list": {
       "get": {
         "summary": "Retrieve FPX bank",
-         "description": "Retrieve FPX bank listing with their display name and online/offline status.",
+        "description": "Retrieve FPX bank listing with their display name and online/offline status.",
+        "operationId": "getFpxBankList",
+        "tags": ["FPX"],
         "x-mint": {
           "metadata": {
             "title": "FPX Bank List",
@@ -33,21 +32,21 @@
         },
         "responses": {
           "200": {
-            "description": "List of banks and status",
+            "description": "List of banks and their availability status",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "banks": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "properties": {
-                          "name": { "type": "string", "description": "Bank display name" },
-                          "status": { "type": "string", "description": "Availability (online/offline)" }
-                        }
-                      }
+                  "$ref": "#/components/schemas/FpxBankListResponse"
+                },
+                "example": {
+                  "banks": {
+                    "maybank": {
+                      "name": "Maybank",
+                      "status": "online"
+                    },
+                    "cimb": {
+                      "name": "CIMB Bank",
+                      "status": "offline"
                     }
                   }
                 }
@@ -55,7 +54,17 @@
             }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Internal server error"
+                }
+              }
+            }
           }
         }
       }
@@ -73,6 +82,47 @@
         "in": "header",
         "name": "hash",
         "description": "SHA-256 hash required for Payment API. Formula: clientSecret + customer_name + customer_email + customer_phone + order_no + amount + order_detail + (payment_code or channel)."
+      }
+    },
+    "schemas": {
+      "FpxBankListResponse": {
+        "type": "object",
+        "properties": {
+          "banks": {
+            "type": "object",
+            "description": "Key-value list of banks where the key is the bank identifier.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Bank"
+            }
+          }
+        }
+      },
+      "Bank": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Bank display name",
+            "example": "Maybank"
+          },
+          "status": {
+            "type": "string",
+            "description": "Availability status of the bank",
+            "enum": ["online", "offline"],
+            "example": "online"
+          }
+        },
+        "required": ["name", "status"]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Internal server error"
+          }
+        },
+        "required": ["message"]
       }
     }
   }
