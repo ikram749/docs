@@ -284,16 +284,22 @@
       "Transaction": {
         "type": "object",
         "properties": {
-          "transaction_id": { "type": "string" },
-          "order_no": { "type": "string" },
-          "product_description": { "type": "string" },
-          "name": { "type": "string" },
-          "phone_number": { "type": "string" },
-          "email_address": { "type": "string" },
-          "payment_use": { "type": "string" },
-          "transaction_amount": { "type": "string" },
-          "transaction_date": { "type": "string" },
-          "status": { "type": "string", "enum": ["Success", "Failed", "Aborted"] }
+          "status": { "type": "integer" },
+          "data":{
+              "type": "object",
+              "properties": {
+                  "transaction_id": { "type": "string" },
+                  "order_no": { "type": "string" },
+                  "product_description": { "type": "string" },
+                  "name": { "type": "string" },
+                  "phone_number": { "type": "string" },
+                  "email_address": { "type": "string" },
+                  "payment_use": { "type": "string" },
+                  "transaction_amount": { "type": "string" },
+                  "transaction_date": { "type": "string" },
+                  "status": { "type": "string", "enum": ["Success", "Failed", "Aborted"] }
+              }
+          }
         }
       },
       "RefundRequest": {
