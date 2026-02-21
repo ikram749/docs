@@ -64,8 +64,7 @@
         "x-mint": {
           "metadata": {
             "title": "Initiate Payment",
-            "description": "Create a new payment request with customer and order details.
-            To pay for test Purchases, use 4444 3333 2222 1111 as the card number, 123 as CVC, any date/month greater than now as expiry and any (Latin) cardholder name. Any other card number/CVC/expiry not greater or equal than the current month will all fail a test payment.",
+            "description": "Create a new payment request with customer and order details. To pay for test Purchases, use 4444 3333 2222 1111 as the card number, 123 as CVC, any date/month greater than now as expiry and any (Latin) cardholder name. Any other card number/CVC/expiry not greater or equal than the current month will all fail a test payment.",
             "og:title": "Start a Payment"
           }
         },
@@ -143,7 +142,7 @@
         "parameters": [
           { "name": "date_start", "in": "query", "schema": { "type": "string", "format": "date" }, "description": "Start date filter (optional)" },
           { "name": "date_end", "in": "query", "schema": { "type": "string", "format": "date" }, "description": "End date filter (optional)" },
-          { "name": "per_page", "in": "query", "schema": { "type": "integer" }, "description": "Number of records per page (default: 100)" },
+          { "name": "per_page", "in": "query", "schema": { "type": "integer" }, "description": "Number of records per page (default: 100)" }
         ],
         "responses": {
           "200": {
@@ -308,19 +307,7 @@
                     "transaction_amount": { "type": "string", "example": "10.00" },
                     "transaction_date": { "type": "string", "example": "2026-02-18 23:44:36" },
                     "status_message": { "type": "string", "enum": ["Pending", "Success", "Failed", "Aborted"], "example": "Pending" }
-                  },
-                  "required": [
-                    "transaction_id",
-                    "order_no",
-                    "product_description",
-                    "name",
-                    "phone_number",
-                    "email_address",
-                    "payment_use",
-                    "transaction_amount",
-                    "transaction_date",
-                    "status_message"
-                  ]
+                  }
                 }
               },
               "first_page_url": { "type": "string", "example": "https://sayabelipay.com/api/transactions?page=1" },
@@ -344,25 +331,9 @@
               "prev_page_url": { "type": ["string", "null"], "example": null },
               "to": { "type": "integer", "example": 1 },
               "total": { "type": "integer", "example": 17 }
-            },
-            "required": [
-              "current_page",
-              "data",
-              "first_page_url",
-              "from",
-              "last_page",
-              "last_page_url",
-              "links",
-              "next_page_url",
-              "path",
-              "per_page",
-              "prev_page_url",
-              "to",
-              "total"
-            ]
+            }
           }
-        },
-        "required": ["status", "data"]
+        }
       },
       "TransactionDetailResponse": {
         "type": "object",
@@ -375,12 +346,16 @@
           "data":{
               "type": "object",
               "properties": {
-                  "transaction_id": { "type": "string" },
-                  "order_no": { "type": "string" },
-                  "bank_name": { "type": "string" },
-                  "status": { "type": "string" },
-                  "processed_at": { "type": "string"},
-                  "message": { "type": "string" }
+                   "transaction_id": { "type": "string", "example": "166C087C3964E" },
+                    "order_no": { "type": "string", "example": "l9SXsC" },
+                    "product_description": { "type": "string", "example": "Product corrupti e" },
+                    "name": { "type": "string", "example": "test user" },
+                    "phone_number": { "type": "string", "example": "60123456789" },
+                    "email_address": { "type": "string", "example": "email@email.com" },
+                    "payment_use": { "type": "string", "example": "ONLINE_BANKING" },
+                    "transaction_amount": { "type": "string", "example": "10.00" },
+                    "transaction_date": { "type": "string", "example": "2026-02-18 23:44:36" },
+                    "status_message": { "type": "string", "enum": ["Pending", "Success", "Failed", "Aborted"], "example": "Pending" }
               }
           }
         }
@@ -399,7 +374,7 @@
           "refund_reason": { "type": "string", "description": "Reason for requesting the refund (e.g., duplicate payment, cancellation, product not delivered)." },
           "bank_account_holder_number": { "type": "integer", "example": "75676253422", "description": "Recipient's bank account number where the refund should be credited." },
           "bank_account_holder_name": { "type": "string", "description": "Full name of the bank account holder receiving the refund." },
-          "bank_name": { "type": "string", "description": "Name or code of the bank where the refund account is held (e.g., HSBC, CIMB)."},
+          "bank_name": { "type": "string", "description": "Name or code of the bank where the refund account is held (e.g., HSBC, CIMB)."}
         }
       },
       "RefundResponse": {
