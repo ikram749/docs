@@ -265,27 +265,18 @@
       "PaymentResponse": {
         "type": "object",
         "properties": {
-          "status": { 
-            "type": "integer",
-            "example": 200,
-            "description": "HTTP-like status code indicating success or failure"
+          "transaction_id": {
+          "type": "string",
+          "description": "Unique identifier for the transaction"
           },
-          "data":{
-              "type": "object",
-              "properties": {
-                 "transaction_id": { "type": "string" },
-                  "order_no": { "type": "string" },
-                  "product_description": { "type": "string" },
-                  "channel": { "type": "string" },
-                  "currency": { "type": "string", "example": "MYR" },
-                  "transaction_amount": { "type": "string" },
-                  "transaction_date": { "type": "string" },
-                  "name": { "type": "string" },
-                  "phone_number": { "type": "string" },
-                  "email_address": { "type": "string" },
-                  "merchant_id": { "type": "string" },
-                  "status": { "type": "string", "enum": ["Success", "Failed", "Aborted"] }
-              }
+          "order_no": {
+            "type": "string",
+            "description": "The order number associated with the transaction"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Success", "Failed", "Aborted"],
+            "description": "The status of the payment (Success, Failed, Aborted)"
           }
         }
       },
