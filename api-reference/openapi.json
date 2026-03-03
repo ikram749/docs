@@ -284,7 +284,6 @@
                   "phone_number": { "type": "string" },
                   "email_address": { "type": "string" },
                   "merchant_id": { "type": "string" },
-                  "merchant_redirect_url": { "type": "string" },
                   "status": { "type": "string", "enum": ["Success", "Failed", "Aborted"] }
               }
           }
