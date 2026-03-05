@@ -414,6 +414,31 @@
   },
   "components": {
     "schemas": {
+      "FpxBankListResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "HTTP-like status code indicating success or failure"
+          },
+          "banks": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string", "description": "Display name of the bank" },
+                "status": {
+                  "type": "string",
+                  "enum": ["online", "offline"],
+                  "description": "Availability status of the bank for FPX transactions"
+                }
+              }
+            },
+            "description": "A dictionary of bank codes with their corresponding names and statuses"
+          }
+        }
+      },
       "PaymentRequest": {
         "type": "object",
         "required": [
@@ -864,13 +889,13 @@
               },
               "first_page_url": {
                 "type": "string",
-                "example": "https://sayabelipay.com/api/payout?page=1"
+                "example": "https://sayabelipay.com/api/payouts?page=1"
               },
               "from": { "type": "integer", "example": 1 },
               "last_page": { "type": "integer", "example": 17 },
               "last_page_url": {
                 "type": "string",
-                "example": "https://sayabelipay.com/api/payout?page=17"
+                "example": "https://sayabelipay.com/api/payouts?page=17"
               },
               "links": {
                 "type": "array",
@@ -888,11 +913,11 @@
               },
               "next_page_url": {
                 "type": ["string", "null"],
-                "example": "https://sayabelipay.com/api/payout?page=2"
+                "example": "https://sayabelipay.com/api/payouts?page=2"
               },
               "path": {
                 "type": "string",
-                "example": "https://sayabelipay.com/api/payout"
+                "example": "https://sayabelipay.com/api/payouts"
               },
               "per_page": { "type": "integer", "example": 1 },
               "prev_page_url": { "type": ["string", "null"], "example": null },
