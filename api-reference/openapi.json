@@ -252,7 +252,7 @@
       }
     },
     "/payout/account": {
-      "post": {
+      "get": {
         "summary": "Balance check for payout",
         "description": "Check the available balance for payouts.",
         "tags": ["Payout"],
