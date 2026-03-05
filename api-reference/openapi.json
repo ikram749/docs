@@ -817,43 +817,82 @@
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/PayoutDetailResponse"
+                  "type": "object",
+                  "properties": {
+                    "transaction_id": {
+                      "type": "string",
+                      "example": "166C087C3964E"
+                    },
+                    "order_no": { "type": "string", "example": "l9SXsC" },
+                    "product_description": {
+                      "type": "string",
+                      "example": "Product corrupti e"
+                    },
+                    "name": { "type": "string", "example": "test user" },
+                    "phone_number": {
+                      "type": "string",
+                      "example": "60123456789"
+                    },
+                    "email_address": {
+                      "type": "string",
+                      "example": "email@email.com"
+                    },
+                    "payment_use": {
+                      "type": "string",
+                      "example": "ONLINE_BANKING"
+                    },
+                    "transaction_amount": {
+                      "type": "string",
+                      "example": "10.00"
+                    },
+                    "transaction_date": {
+                      "type": "string",
+                      "example": "2026-02-18 23:44:36"
+                    },
+                    "status_message": {
+                      "type": "string",
+                      "enum": ["Pending", "Success", "Failed", "Aborted"],
+                      "example": "Pending"
+                    }
+                  }
                 }
               },
               "first_page_url": {
                 "type": "string",
-                "example": "https://sayabelipay.com/api/payout?page=1"
+                "example": "https://sayabelipay.com/api/transactions?page=1"
               },
               "from": { "type": "integer", "example": 1 },
               "last_page": { "type": "integer", "example": 17 },
               "last_page_url": {
                 "type": "string",
-                "example": "https://sayabelipay.com/api/payout?page=17"
+                "example": "https://sayabelipay.com/api/transactions?page=17"
               },
               "links": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/PaginationLink"
+                  "type": "object",
+                  "properties": {
+                    "url": { "type": ["string", "null"], "example": null },
+                    "label": {
+                      "type": "string",
+                      "example": "&laquo; Previous"
+                    },
+                    "active": { "type": "boolean", "example": false }
+                  }
                 }
               },
               "next_page_url": {
                 "type": ["string", "null"],
-                "example": "https://sayabelipay.com/api/payout?page=2"
+                "example": "https://sayabelipay.com/api/transactions?page=2"
               },
               "path": {
                 "type": "string",
-                "example": "https://sayabelipay.com/api/payout"
+                "example": "https://sayabelipay.com/api/transactions"
               },
               "per_page": { "type": "integer", "example": 1 },
-              "prev_page_url": {
-                "$ref": "#/components/schemas/NullableString"
-              },
-              "to": {
-                "$ref": "#/components/schemas/IntegerExample"
-              },
-              "total": {
-                "$ref": "#/components/schemas/IntegerExample"
-              }
+              "prev_page_url": { "type": ["string", "null"], "example": null },
+              "to": { "type": "integer", "example": 1 },
+              "total": { "type": "integer", "example": 17 }
             }
           }
         }
