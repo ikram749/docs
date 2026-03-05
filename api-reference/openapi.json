@@ -269,7 +269,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PayoutListResponse"
+                  "$ref": "#/components/schemas/PayoutAccountResponse"
                 },
                 "example": {
                   "status": 200,
@@ -690,6 +690,31 @@
               "status": { "type": "string" },
               "processed_at": { "type": "string" },
               "message": { "type": "string" }
+            }
+          }
+        }
+      },
+      "PayoutAccountResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "HTTP-like status code indicating success or failure"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "currency": { "type": "string", "description": "Currency code (e.g., MYR)" },
+              "send_fee": { "type": "string", "description": "Fee for sending payout" },
+              "convertible_balance_from_settlement": {
+                "type": "string",
+                "description": "Amount available for payout from settlements"
+              },
+              "current_balance": {
+                "type": "string",
+                "description": "Current available balance for payouts"
+              }
             }
           }
         }
