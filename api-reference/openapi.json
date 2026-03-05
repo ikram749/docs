@@ -23,8 +23,8 @@
     "/fpx_bank_list": {
       "get": {
         "summary": "Retrieve FPX bank",
-         "description": "Retrieve FPX bank listing with their display name and online/offline status.",
-         "tags": ["Bank List"],
+        "description": "Retrieve FPX bank listing with their display name and online/offline status.",
+        "tags": ["Bank List"],
         "x-mint": {
           "metadata": {
             "title": "FPX Bank List",
@@ -58,9 +58,9 @@
     },
     "/payment": {
       "post": {
-         "summary": "Create purchases",
-         "description": "Initiate a new payment transaction. Requires a SHA-256 hash for request integrity.",
-         "tags": ["Purchases"],
+        "summary": "Create purchases",
+        "description": "Initiate a new payment transaction. Requires a SHA-256 hash for request integrity.",
+        "tags": ["Purchases"],
         "x-mint": {
           "metadata": {
             "title": "Create purchases",
@@ -118,8 +118,10 @@
             "description": "Transaction details",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/TransactionDetailResponse" }
-              } 
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionDetailResponse"
+                }
+              }
             }
           },
           "404": { "description": "Transaction not found" },
@@ -140,9 +142,24 @@
           }
         },
         "parameters": [
-          { "name": "date_start", "in": "query", "schema": { "type": "string", "format": "date" }, "description": "Start date filter (optional)" },
-          { "name": "date_end", "in": "query", "schema": { "type": "string", "format": "date" }, "description": "End date filter (optional)" },
-          { "name": "per_page", "in": "query", "schema": { "type": "integer" }, "description": "Number of records per page (default: 100)" }
+          {
+            "name": "date_start",
+            "in": "query",
+            "schema": { "type": "string", "format": "date" },
+            "description": "Start date filter (optional)"
+          },
+          {
+            "name": "date_end",
+            "in": "query",
+            "schema": { "type": "string", "format": "date" },
+            "description": "End date filter (optional)"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": { "type": "integer" },
+            "description": "Number of records per page (default: 100)"
+          }
         ],
         "responses": {
           "200": {
@@ -151,7 +168,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/TransactionListResponse" }
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionListResponse"
+                  }
                 }
               }
             }
@@ -185,7 +204,9 @@
             "description": "Transaction details",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/TransactionDetailResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionDetailResponse"
+                }
               }
             }
           },
@@ -229,6 +250,164 @@
           "500": { "description": "Internal server error" }
         }
       }
+    },
+    "/payout/account": {
+      "post": {
+        "summary": "Balance check for payout",
+        "description": "Check the available balance for payouts.",
+        "tags": ["Payout"],
+        "x-mint": {
+          "metadata": {
+            "title": "Balance check for payout",
+            "description": "Check the available balance for payouts.",
+            "og:title": "Check Payout Balance"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account balance details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountPayoutResponse"
+                }
+              },
+              "example": {
+                "status": 200,
+                "data": {
+                  "currency": "MYR",
+                  "send_fee": "0.00",
+                  "convertible_balance_from_settlement": "1000.00",
+                  "current_balance": "1000.00"
+                }
+              }
+            }
+          },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/payout/create": {
+      "post": {
+        "summary": "Payout a transaction",
+        "description": "Initiate a payout for a transaction.",
+        "tags": ["Payout"],
+        "x-mint": {
+          "metadata": {
+            "title": "Payout a transaction",
+            "description": "Initiate a payout for a transaction.",
+            "og:title": "Payout Transaction"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PayoutRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payout details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PayoutResponse" }
+              }
+            }
+          },
+          "404": { "description": "Insufficient balance to process payout" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/payout": {
+      "get": {
+        "summary": "List Payout Transactions",
+        "description": "Retrieve a paginated list of payout transactions with optional date filters.",
+        "tags": ["Payout"],
+        "x-mint": {
+          "metadata": {
+            "title": "List Payout Transactions",
+            "description": "Retrieve payout transactions with pagination and optional date range filters.",
+            "og:title": "Payout Transaction History"
+          }
+        },
+        "parameters": [
+          {
+            "name": "date_start",
+            "in": "query",
+            "schema": { "type": "string", "format": "date" },
+            "description": "Start date filter (optional)"
+          },
+          {
+            "name": "date_end",
+            "in": "query",
+            "schema": { "type": "string", "format": "date" },
+            "description": "End date filter (optional)"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": { "type": "integer" },
+            "description": "Number of records per page (default: 100)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payout transaction list retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PayoutListResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/payout/{payout_id}": {
+      "get": {
+        "summary": "Payout Transaction Details",
+        "description": "Retrieve details of a specific payout transaction.",
+        "tags": ["Payout"],
+        "x-mint": {
+          "metadata": {
+            "title": "Payout Transaction Details",
+            "description": "Get detailed information for a specific payout transaction by ID.",
+            "og:title": "View Payout Transaction"
+          }
+        },
+        "parameters": [
+          {
+            "name": "payout_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payout transaction details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PayoutDetailResponse"
+                }
+              }
+            }
+          },
+          "404": { "description": "Record not found" },
+          "500": { "description": "Internal server error" }
+        }
+      }
     }
   },
   "components": {
@@ -247,15 +426,28 @@
           "hash"
         ],
         "properties": {
-          "order_no": { "type": "string", "description": "Unique order number from merchant" },
-          "order_detail": { "type": "string", "description": "Product/service description (max 30 chars)" },
-          "amount": { "type": "string", "example": "1000.00", "description": "Transaction amount" },
+          "order_no": {
+            "type": "string",
+            "description": "Unique order number from merchant"
+          },
+          "order_detail": {
+            "type": "string",
+            "description": "Product/service description (max 30 chars)"
+          },
+          "amount": {
+            "type": "string",
+            "example": "1000.00",
+            "description": "Transaction amount"
+          },
           "quantity": { "type": "integer", "description": "Quantity of items" },
           "customer_name": { "type": "string" },
           "customer_email": { "type": "string", "format": "email" },
           "customer_phone": { "type": "string" },
           "channel": { "type": "string", "enum": ["ONLINE_BANKING", "CC"] },
-          "payment_code": { "type": "string", "description": "Bank code if applicable" },
+          "payment_code": {
+            "type": "string",
+            "description": "Bank code if applicable"
+          },
           "hash": {
             "type": "string",
             "description": "SHA-256 hash of concatenated string: clientSecret + customer_name + customer_email + customer_phone + order_no + amount + order_detail + paymentCode"
@@ -266,8 +458,8 @@
         "type": "object",
         "properties": {
           "transaction_id": {
-          "type": "string",
-          "description": "Unique identifier for the transaction"
+            "type": "string",
+            "description": "Unique identifier for the transaction"
           },
           "order_no": {
             "type": "string",
@@ -280,10 +472,10 @@
           }
         }
       },
-       "TransactionListResponse": {
+      "TransactionListResponse": {
         "type": "object",
         "properties": {
-          "status": { 
+          "status": {
             "type": "integer",
             "example": 200,
             "description": "HTTP-like status code indicating success or failure"
@@ -297,36 +489,76 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "transaction_id": { "type": "string", "example": "166C087C3964E" },
+                    "transaction_id": {
+                      "type": "string",
+                      "example": "166C087C3964E"
+                    },
                     "order_no": { "type": "string", "example": "l9SXsC" },
-                    "product_description": { "type": "string", "example": "Product corrupti e" },
+                    "product_description": {
+                      "type": "string",
+                      "example": "Product corrupti e"
+                    },
                     "name": { "type": "string", "example": "test user" },
-                    "phone_number": { "type": "string", "example": "60123456789" },
-                    "email_address": { "type": "string", "example": "email@email.com" },
-                    "payment_use": { "type": "string", "example": "ONLINE_BANKING" },
-                    "transaction_amount": { "type": "string", "example": "10.00" },
-                    "transaction_date": { "type": "string", "example": "2026-02-18 23:44:36" },
-                    "status_message": { "type": "string", "enum": ["Pending", "Success", "Failed", "Aborted"], "example": "Pending" }
+                    "phone_number": {
+                      "type": "string",
+                      "example": "60123456789"
+                    },
+                    "email_address": {
+                      "type": "string",
+                      "example": "email@email.com"
+                    },
+                    "payment_use": {
+                      "type": "string",
+                      "example": "ONLINE_BANKING"
+                    },
+                    "transaction_amount": {
+                      "type": "string",
+                      "example": "10.00"
+                    },
+                    "transaction_date": {
+                      "type": "string",
+                      "example": "2026-02-18 23:44:36"
+                    },
+                    "status_message": {
+                      "type": "string",
+                      "enum": ["Pending", "Success", "Failed", "Aborted"],
+                      "example": "Pending"
+                    }
                   }
                 }
               },
-              "first_page_url": { "type": "string", "example": "https://sayabelipay.com/api/transactions?page=1" },
+              "first_page_url": {
+                "type": "string",
+                "example": "https://sayabelipay.com/api/transactions?page=1"
+              },
               "from": { "type": "integer", "example": 1 },
               "last_page": { "type": "integer", "example": 17 },
-              "last_page_url": { "type": "string", "example": "https://sayabelipay.com/api/transactions?page=17" },
+              "last_page_url": {
+                "type": "string",
+                "example": "https://sayabelipay.com/api/transactions?page=17"
+              },
               "links": {
                 "type": "array",
                 "items": {
                   "type": "object",
                   "properties": {
                     "url": { "type": ["string", "null"], "example": null },
-                    "label": { "type": "string", "example": "&laquo; Previous" },
+                    "label": {
+                      "type": "string",
+                      "example": "&laquo; Previous"
+                    },
                     "active": { "type": "boolean", "example": false }
                   }
                 }
               },
-              "next_page_url": { "type": ["string", "null"], "example": "https://sayabelipay.com/api/transactions?page=2" },
-              "path": { "type": "string", "example": "https://sayabelipay.com/api/transactions" },
+              "next_page_url": {
+                "type": ["string", "null"],
+                "example": "https://sayabelipay.com/api/transactions?page=2"
+              },
+              "path": {
+                "type": "string",
+                "example": "https://sayabelipay.com/api/transactions"
+              },
               "per_page": { "type": "integer", "example": 1 },
               "prev_page_url": { "type": ["string", "null"], "example": null },
               "to": { "type": "integer", "example": 1 },
@@ -338,25 +570,41 @@
       "TransactionDetailResponse": {
         "type": "object",
         "properties": {
-          "status": { 
+          "status": {
             "type": "integer",
             "example": 200,
             "description": "HTTP-like status code indicating success or failure"
           },
-          "data":{
-              "type": "object",
-              "properties": {
-                "transaction_id": { "type": "string", "example": "166C087C3964E" },
-                "order_no": { "type": "string", "example": "l9SXsC" },
-                "product_description": { "type": "string", "example": "Product corrupti e" },
-                "name": { "type": "string", "example": "test user" },
-                "phone_number": { "type": "string", "example": "60123456789" },
-                "email_address": { "type": "string", "example": "email@email.com" },
-                "payment_use": { "type": "string", "example": "ONLINE_BANKING" },
-                "transaction_amount": { "type": "string", "example": "10.00" },
-                "transaction_date": { "type": "string", "example": "2026-02-18 23:44:36" },
-                "status_message": { "type": "string", "enum": ["Pending", "Success", "Failed", "Aborted"], "example": "Pending" }
+          "data": {
+            "type": "object",
+            "properties": {
+              "transaction_id": {
+                "type": "string",
+                "example": "166C087C3964E"
+              },
+              "order_no": { "type": "string", "example": "l9SXsC" },
+              "product_description": {
+                "type": "string",
+                "example": "Product corrupti e"
+              },
+              "name": { "type": "string", "example": "test user" },
+              "phone_number": { "type": "string", "example": "60123456789" },
+              "email_address": {
+                "type": "string",
+                "example": "email@email.com"
+              },
+              "payment_use": { "type": "string", "example": "ONLINE_BANKING" },
+              "transaction_amount": { "type": "string", "example": "10.00" },
+              "transaction_date": {
+                "type": "string",
+                "example": "2026-02-18 23:44:36"
+              },
+              "status_message": {
+                "type": "string",
+                "enum": ["Pending", "Success", "Failed", "Aborted"],
+                "example": "Pending"
               }
+            }
           }
         }
       },
@@ -371,32 +619,242 @@
           "email"
         ],
         "properties": {
-          "transaction_id": { "type": "string", "description": "Unique identifier for the transaction generated by the payment gateway." },
-          "refund_reason": { "type": "string", "description": "Reason for requesting the refund (e.g., duplicate payment, cancellation, product not delivered)." },
-          "bank_code": { "type": "string", "description": "Name or code of the bank where the refund account is held (e.g., HSBC, CIMB)."},
-          "bank_account_number": { "type": "integer", "example": "75676253422", "description": "Recipient's bank account number where the refund should be credited." },
-          "account_name": { "type": "string", "description": "Full name of the bank account holder receiving the refund." },
-          "email": { "type": "string", "description": "Email of the bank account holder receiving the refund." }
+          "transaction_id": {
+            "type": "string",
+            "description": "Unique identifier for the transaction generated by the payment gateway."
+          },
+          "refund_reason": {
+            "type": "string",
+            "description": "Reason for requesting the refund (e.g., duplicate payment, cancellation, product not delivered)."
+          },
+          "bank_code": {
+            "type": "string",
+            "description": "Name or code of the bank where the refund account is held (e.g., HSBC, CIMB)."
+          },
+          "bank_account_number": {
+            "type": "integer",
+            "example": "75676253422",
+            "description": "Recipient's bank account number where the refund should be credited."
+          },
+          "account_name": {
+            "type": "string",
+            "description": "Full name of the bank account holder receiving the refund."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email of the bank account holder receiving the refund."
+          }
         }
       },
       "RefundResponse": {
         "type": "object",
         "properties": {
-          "status": { 
+          "status": {
             "type": "integer",
             "example": 200,
             "description": "HTTP-like status code indicating success or failure"
           },
-          "data":{
-              "type": "object",
-              "properties": {
-                  "transaction_id": { "type": "string" },
-                  "order_no": { "type": "string" },
-                  "bank_code": { "type": "string" },
-                  "status": { "type": "string" },
-                  "processed_at": { "type": "string"},
-                  "message": { "type": "string" }
+          "data": {
+            "type": "object",
+            "properties": {
+              "transaction_id": { "type": "string" },
+              "order_no": { "type": "string" },
+              "bank_code": { "type": "string" },
+              "status": { "type": "string" },
+              "processed_at": { "type": "string" },
+              "message": { "type": "string" }
+            }
+          }
+        }
+      },
+      "PayoutRequest": {
+        "type": "object",
+        "required": [
+          "amount",
+          "bank_code",
+          "bank_account_number",
+          "account_name",
+          "email"
+        ],
+        "properties": {
+          "amount": {
+            "type": "string",
+            "example": "1000.00",
+            "description": "Amount to be paid out"
+          },
+          "bank_code": {
+            "type": "string",
+            "description": "Name or code of the bank where the payout account is held (e.g., HSBC, CIMB)."
+          },
+          "bank_account_number": {
+            "type": "integer",
+            "example": "75676253422",
+            "description": "Recipient's bank account number where the payout should be credited."
+          },
+          "account_name": {
+            "type": "string",
+            "description": "Full name of the bank account holder receiving the payout."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email of the bank account holder receiving the payout."
+          }
+        }
+      },
+      "PayoutResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "HTTP-like status code indicating success or failure"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "reference_no": {
+                "type": "string",
+                "description": "Unique identifier for the payout transaction."
+              },
+              "bank_code": {
+                "type": "string",
+                "description": "Code representing the recipient’s bank."
+              },
+              "bank_account_number": {
+                "type": "string",
+                "description": "Recipient’s bank account number."
+              },
+              "account_name": {
+                "type": "string",
+                "description": "Name associated with the bank account."
+              },
+              "email": {
+                "type": "string",
+                "description": "Email of the payout recipient."
+              },
+              "amount": {
+                "type": "string",
+                "description": "Amount paid out, as a string to maintain precision."
+              },
+              "status": {
+                "type": "string",
+                "description": "Current status of the payout (e.g., pending, processed, completed)."
+              },
+              "processed_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Timestamp when the payout was processed."
               }
+            }
+          }
+        }
+      },
+      "PayoutDetailResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "HTTP-like status code indicating success or failure"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "reference_no": {
+                "type": "string",
+                "description": "Unique identifier for the payout transaction."
+              },
+              "bank_code": {
+                "type": "string",
+                "description": "Code representing the recipient’s bank."
+              },
+              "bank_account_number": {
+                "type": "string",
+                "description": "Recipient’s bank account number."
+              },
+              "account_name": {
+                "type": "string",
+                "description": "Name associated with the bank account."
+              },
+              "email": {
+                "type": "string",
+                "description": "Email of the payout recipient."
+              },
+              "amount": {
+                "type": "string",
+                "description": "Amount paid out, as a string to maintain precision."
+              },
+              "status": {
+                "type": "string",
+                "description": "Current status of the payout (e.g., pending, processed, completed)."
+              },
+              "processed_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Timestamp when the payout was processed."
+              },
+              "completed_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Timestamp when the payout was completed."
+              }
+            }
+          }
+        }
+      },
+      "PayoutListResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "HTTP-like status code indicating success or failure"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "current_page": { "type": "integer", "example": 1 },
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PayoutDetailResponse"
+                }
+              },
+              "first_page_url": {
+                "type": "string",
+                "example": "https://sayabelipay.com/api/payout?page=1"
+              },
+              "from": { "type": "integer", "example": 1 },
+              "last_page": { "type": "integer", "example": 17 },
+              "last_page_url": {
+                "type": "string",
+                "example": "https://sayabelipay.com/api/payout?page=17"
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PaginationLink"
+                }
+              },
+              "next_page_url": {
+                "type": ["string", "null"],
+                "example": "https://sayabelipay.com/api/payout?page=2"
+              },
+              "path": {
+                "type": "string",
+                "example": "https://sayabelipay.com/api/payout"
+              },
+              "per_page": { "type": "integer", "example": 1 },
+              "prev_page_url": {
+                "$ref": "#/components/schemas/NullableString"
+              },
+              "to": {
+                "$ref": "#/components/schemas/IntegerExample"
+              },
+              "total": {
+                "$ref": "#/components/schemas/IntegerExample"
+              }
+            }
           }
         }
       }
