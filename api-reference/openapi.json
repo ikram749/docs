@@ -819,53 +819,56 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "transaction_id": {
+                    "reference_no": {
                       "type": "string",
-                      "example": "166C087C3964E"
+                      "description": "Unique identifier for the payout transaction."
                     },
-                    "order_no": { "type": "string", "example": "l9SXsC" },
-                    "product_description": {
+                    "bank_code": {
                       "type": "string",
-                      "example": "Product corrupti e"
+                      "description": "Code representing the recipient’s bank."
                     },
-                    "name": { "type": "string", "example": "test user" },
-                    "phone_number": {
+                    "bank_account_number": {
                       "type": "string",
-                      "example": "60123456789"
+                      "description": "Recipient’s bank account number."
                     },
-                    "email_address": {
+                    "account_name": {
                       "type": "string",
-                      "example": "email@email.com"
+                      "description": "Name associated with the bank account."
                     },
-                    "payment_use": {
+                    "email": {
                       "type": "string",
-                      "example": "ONLINE_BANKING"
+                      "description": "Email of the payout recipient."
                     },
-                    "transaction_amount": {
+                    "amount": {
                       "type": "string",
-                      "example": "10.00"
+                      "description": "Amount paid out, as a string to maintain precision."
                     },
-                    "transaction_date": {
+                    "status": {
                       "type": "string",
-                      "example": "2026-02-18 23:44:36"
+                      "description": "Current status of the payout (e.g., pending, processed, completed)."
                     },
-                    "status_message": {
+                    "processed_at": {
                       "type": "string",
-                      "enum": ["Pending", "Success", "Failed", "Aborted"],
-                      "example": "Pending"
+                      "format": "date-time",
+                      "description": "Timestamp when the payout was processed."
+                    },
+                    "completed_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the payout was completed."
                     }
                   }
                 }
               },
               "first_page_url": {
                 "type": "string",
-                "example": "https://sayabelipay.com/api/transactions?page=1"
+                "example": "https://sayabelipay.com/api/payout?page=1"
               },
               "from": { "type": "integer", "example": 1 },
               "last_page": { "type": "integer", "example": 17 },
               "last_page_url": {
                 "type": "string",
-                "example": "https://sayabelipay.com/api/transactions?page=17"
+                "example": "https://sayabelipay.com/api/payout?page=17"
               },
               "links": {
                 "type": "array",
@@ -883,11 +886,11 @@
               },
               "next_page_url": {
                 "type": ["string", "null"],
-                "example": "https://sayabelipay.com/api/transactions?page=2"
+                "example": "https://sayabelipay.com/api/payout?page=2"
               },
               "path": {
                 "type": "string",
-                "example": "https://sayabelipay.com/api/transactions"
+                "example": "https://sayabelipay.com/api/payout"
               },
               "per_page": { "type": "integer", "example": 1 },
               "prev_page_url": { "type": ["string", "null"], "example": null },
