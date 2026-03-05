@@ -265,25 +265,27 @@
         },
         "responses": {
           "200": {
-            "description": "Account balance details",
+            "description": "List of banks and their availability status",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccountPayoutResponse"
-                }
-              },
-              "example": {
-                "status": 200,
-                "data": {
-                  "currency": "MYR",
-                  "send_fee": "0.00",
-                  "convertible_balance_from_settlement": "1000.00",
-                  "current_balance": "1000.00"
+                  "$ref": "#/components/schemas/PayoutListResponse"
+                },
+                "example": {
+                  "status": 200,
+                  "data": {
+                    "currency": "MYR",
+                    "send_fee": "0.00",
+                    "convertible_balance_from_settlement": "1000.00",
+                    "current_balance": "1000.00"
+                  }
                 }
               }
             }
           },
-          "500": { "description": "Internal server error" }
+          "500": {
+            "description": "Internal server error"
+          }
         }
       }
     },
