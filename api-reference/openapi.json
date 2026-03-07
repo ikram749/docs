@@ -254,12 +254,12 @@
     "/payout/account": {
       "get": {
         "summary": "Balance check for payout",
-        "description": "Check the available balance for payouts.\n-The `convertible_balance_from_statement` will return different data depending on when the request is triggered. This provides flexibility for planning Budget Allocation requests.\n- For example:\n- Trigger today at 11:59 PM MYT: Returns convertible balance from today’s collection.\n- Trigger tomorrow at 12:00 AM MYT: Returns convertible balance from today’s collection.\n- Trigger tomorrow at 11:59 AM MYT: Returns convertible balance from today’s collection.\n- Trigger tomorrow at 12:00 PM MYT: Returns convertible balance from tomorrow’s collection.",
+        "description": "Check the available balance for payouts.\n- The `convertible_balance_from_statement` will return different data depending on when the request is triggered. This provides flexibility for planning Budget Allocation requests.\n- For example: \n- Trigger today at 11:59 PM MYT: Returns convertible balance from today’s collection.\n- Trigger tomorrow at 12:00 AM MYT: Returns convertible balance from today’s collection.\n- Trigger tomorrow at 11:59 AM MYT: Returns convertible balance from today’s collection.\n- Trigger tomorrow at 12:00 PM MYT: Returns convertible balance from tomorrow’s collection.",
         "tags": ["Payout"],
         "x-mint": {
           "metadata": {
             "title": "Balance check for payout",
-            "description": "Check the available balance for payouts.\n-The `convertible_balance_from_statement` will return different data depending on when the request is triggered. This provides flexibility for planning Budget Allocation requests.\n- For example:\n- Trigger today at 11:59 PM MYT: Returns convertible balance from today’s collection.\n- Trigger tomorrow at 12:00 AM MYT: Returns convertible balance from today’s collection.\n- Trigger tomorrow at 11:59 AM MYT: Returns convertible balance from today’s collection.\n- Trigger tomorrow at 12:00 PM MYT: Returns convertible balance from tomorrow’s collection.",
+            "description": "Check the available balance for payouts.\n- The `convertible_balance_from_statement` will return different data depending on when the request is triggered. This provides flexibility for planning Budget Allocation requests.\n- For example:\n- Trigger today at 11:59 PM MYT: Returns convertible balance from today’s collection.\n- Trigger tomorrow at 12:00 AM MYT: Returns convertible balance from today’s collection.\n- Trigger tomorrow at 11:59 AM MYT: Returns convertible balance from today’s collection.\n- Trigger tomorrow at 12:00 PM MYT: Returns convertible balance from tomorrow’s collection.",
             "og:title": "Check Payout Balance"
           }
         },
