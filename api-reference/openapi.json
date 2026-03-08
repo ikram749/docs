@@ -706,7 +706,7 @@
             "type": "object",
             "properties": {
               "currency": { "type": "string", "description": "Currency code (e.g., MYR)" },
-              "send_fee": { "type": "string", "description": "Fee for sending payout" },
+              "send_fee_percentage": { "type": "string", "description": "Fee for sending payout" },
               "convertible_balance_from_settlement": {
                 "type": "string",
                 "description": "Amount available for payout from settlements"
@@ -786,7 +786,15 @@
               },
               "amount": {
                 "type": "string",
-                "description": "Amount paid out, as a string to maintain precision."
+                "description": "Amount to be paid out"
+              },
+              "fee": {
+                "type": "string",
+                "description": "Fee charged for the payout, deducted from the requested amount."
+              },
+              "fee_percentage": {
+                "type": "string",
+                "description": "Percentage of the payout amount charged as a fee."
               },
               "status": {
                 "type": "string",
