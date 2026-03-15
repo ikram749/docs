@@ -464,7 +464,7 @@
           "amount": {
             "type": "string",
             "example": "1000.00",
-            "description": "Transaction amount"
+            "description": "Transaction amount (minimum RM10)"
           },
           "quantity": { "type": "integer", "description": "Quantity of items" },
           "customer_name": { "type": "string" },
@@ -473,11 +473,11 @@
           "channel": { "type": "string", "enum": ["ONLINE_BANKING", "CC"] },
           "payment_code": {
             "type": "string",
-            "description": "Bank code if applicable"
+            "description": "Bank code for FPX payment. See bank list: [/api-reference/bank-list/retrieve-fpx-bank](/api-reference/bank-list/retrieve-fpx-bank)"
           },
           "hash": {
             "type": "string",
-            "description": "SHA-256 hash of concatenated string: clientSecret + customer_name + customer_email + customer_phone + order_no + amount + order_detail + paymentCode"
+            "description": "SHA-256 hash of concatenated string: \nclientSecret + customer_name + customer_email + customer_phone + order_no + amount + order_detail + paymentCode"
           }
         }
       },
