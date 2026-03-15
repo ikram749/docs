@@ -473,7 +473,7 @@
           "channel": { "type": "string", "enum": ["ONLINE_BANKING", "TOUCH_N_GO", "SHOPEE_PAY"] },
           "payment_code": {
             "type": "string",
-            "description": "Bank code for FPX payment.\nSee bank list: (https://docs.sayabelipay.com/api-reference/bank-list/retrieve-fpx-bank)[FPX Bank List]"
+            "description": "Bank code for FPX payment.\nSee bank list: [FPX Bank List](https://docs.sayabelipay.com/api-reference/bank-list/retrieve-fpx-bank)"
           },
           "hash": {
             "type": "string",
@@ -656,7 +656,7 @@
           },
           "bank_code": {
             "type": "string",
-            "description": "Name or code of the bank where the refund account is held:\nSee bank list: (https://docs.sayabelipay.com/api-reference/bank-list/retrieve-fpx-bank)[FPX Bank List]"
+            "description": "Name or code of the bank where the refund account is held:\nSee bank list: [FPX Bank List](https://docs.sayabelipay.com/api-reference/bank-list/retrieve-fpx-bank)"
           },
           "bank_account_number": {
             "type": "integer",
@@ -736,7 +736,7 @@
           },
           "bank_code": {
             "type": "string",
-            "description": "See bank list: (https://docs.sayabelipay.com/guides/payout-bank-codes)[Payout Bank Codes]"
+            "description": "See bank list: [Payout Bank Codes](https://docs.sayabelipay.com/guides/payout-bank-codes)"
             
 
           },
