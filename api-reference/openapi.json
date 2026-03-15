@@ -466,14 +466,14 @@
             "example": "1000.00",
             "description": "Transaction amount (minimum RM10)"
           },
-          "quantity": { "type": "integer", "description": "Quantity of items" },
+          "quantity": { "type": "integer", "example": 1, "description": "Quantity of items" },
           "customer_name": { "type": "string" },
           "customer_email": { "type": "string", "format": "email" },
           "customer_phone": { "type": "string" },
-          "channel": { "type": "string", "enum": ["ONLINE_BANKING", "CC"] },
+          "channel": { "type": "string", "enum": ["ONLINE_BANKING", "TOUCH_N_GO", "SHOPEE_PAY"] },
           "payment_code": {
             "type": "string",
-            "description": "Bank code for FPX payment. See bank list: [/api-reference/bank-list/retrieve-fpx-bank](/api-reference/bank-list/retrieve-fpx-bank)"
+            "description": "Bank code for FPX payment. See bank list: [/api-reference/bank-list/retrieve-fpx-bank](FPX Bank List)"
           },
           "hash": {
             "type": "string",
@@ -736,7 +736,7 @@
           },
           "bank_code": {
             "type": "string",
-            "description": "Name or code of the bank where the payout account is held (e.g., HSBC, CIMB)."
+            "description": "See bank list: [/guides/payout-bank-codes](Payout Bank Codes)"
           },
           "bank_account_number": {
             "type": "integer",

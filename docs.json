@@ -26,7 +26,8 @@
           "pages": [
             "/guides/hash-generation",
             "/guides/payment-channels",
-            "/guides/payment-codes"
+            "/guides/payment-bank-codes",
+            "/guides/payout-bank-codes"
           ]
         }
       ]
